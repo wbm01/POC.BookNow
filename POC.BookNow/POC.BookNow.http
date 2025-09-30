@@ -1,0 +1,6 @@
+@POC.BookNow_HostAddress = http://localhost:5257
+
+GET {{POC.BookNow_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
