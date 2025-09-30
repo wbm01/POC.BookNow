@@ -1,7 +1,6 @@
 ﻿using Moq;
 using POC.BookNow.Domain.Commands.v1.Rooms.Creates;
 using POC.BookNow.Domain.Interfaces.v1.Services;
-using POC.BookNow.Domain.Services.v1;
 using POC.BookNow.Tests.Mocks.Domain.Commands.v1.Rooms.Creates;
 
 namespace POC.BookNow.Tests.Units.Domain.Commands.v1.Rooms.Creates
