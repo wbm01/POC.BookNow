@@ -2,7 +2,7 @@
 
 namespace POC.BookNow.Domain.Commands.v1.Rooms.Creates
 {
-    public class CreateRoomCommand : IRequest<Guid>
+    public class CreateRoomCommand : IRequest<int>
     {
         public CreateRoomCommand(
             int id, 

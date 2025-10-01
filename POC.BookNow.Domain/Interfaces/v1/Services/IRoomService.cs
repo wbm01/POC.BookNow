@@ -1,9 +1,10 @@
-﻿using POC.BookNow.Domain.Commands.v1.Rooms.Creates;
+﻿using POC.BookNow.Domain.Entities.v1;
 
 namespace POC.BookNow.Domain.Interfaces.v1.Services
 {
     public interface IRoomService
     {
-        public Task<Guid> InsertRoomAsync(CreateRoomCommand command, CancellationToken cancellationToken);
+        Task<int> InsertRoomAsync(Room room, CancellationToken cancellationToken);
+        Task<bool> DeleteRoomAsync(int roomId, CancellationToken cancellationToken);
     }
 }

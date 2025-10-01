@@ -2,6 +2,7 @@
 using POC.BookNow.Domain.Commands.v1.Rooms.Creates;
 using POC.BookNow.Domain.Interfaces.v1.Services;
 using POC.BookNow.Tests.Mocks.Domain.Commands.v1.Rooms.Creates;
+using POC.BookNow.Tests.Mocks.Domain.Entities.v1;
 
 namespace POC.BookNow.Tests.Units.Domain.Commands.v1.Rooms.Creates
 {
@@ -17,11 +18,12 @@ namespace POC.BookNow.Tests.Units.Domain.Commands.v1.Rooms.Creates
         }
 
         [Fact (DisplayName = "Should Insert a Room")]
-        public async Task ShouldInsertRom()
+        public async Task ShouldInsertRomAsync()
         {
-            var roomMock = RoomMock.CreateRoomMock();
+            var commandRoomMock = CreateRoomCommandMock.CreateRoomMock();
+            var roomMock = RoomMock.CreateRoomEntityMock();
             var roomServiceMock = new Mock<IRoomService>();
-            var insertRoomGuid = Guid.NewGuid();
+            var insertRoomInt = commandRoomMock.Id;
 
             roomServiceMock.Setup(
                 service => 
@@ -31,15 +33,15 @@ namespace POC.BookNow.Tests.Units.Domain.Commands.v1.Rooms.Creates
                 )
             ).Returns(
                 Task.FromResult(
-                    insertRoomGuid
+                    insertRoomInt
                 )
             );
 
             var handle = EstablishContext(roomServiceMock.Object);
 
-            var result = await handle.Handle(roomMock, CancellationToken.None);
+            var result = await handle.Handle(commandRoomMock, CancellationToken.None);
 
-            Assert.Equal(result, insertRoomGuid);
+            Assert.Equal(result, insertRoomInt);
         }
     }
 }

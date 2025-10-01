@@ -1,5 +1,4 @@
-﻿using POC.BookNow.Domain.Commands.v1.Rooms.Creates;
-using POC.BookNow.Domain.Entities.v1;
+﻿using POC.BookNow.Domain.Entities.v1;
 using POC.BookNow.Domain.Interfaces.v1.Repositories;
 using POC.BookNow.Domain.Interfaces.v1.Services;
 
@@ -14,28 +13,33 @@ namespace POC.BookNow.Domain.Services.v1
             _roomRepository = roomRepository;
         }
 
-        public async Task<Guid> InsertRoomAsync(CreateRoomCommand command, CancellationToken cancellationToken)
+        public async Task<int> InsertRoomAsync(
+            Room room,
+            CancellationToken cancellationToken
+        )
         {
             try
             {
-                if (command.Capacity < 1)
-                {
-                    throw new Exception();
-                }
-
-                var entity = new Room(
-                command.Id,
-                command.Name,
-                command.Capacity,
-                command.Resources
+                return await _roomRepository.InsertRoomAsync(
+                    room,
+                    cancellationToken
                 );
-
-                return await _roomRepository.InsertRoom(entity, cancellationToken);
             }
-            catch( Exception ex)
+            catch (ArgumentException exception)
             {
-                throw new Exception($"Erro ao inserir sala. Capacity é {command.Capacity}");
+                throw new ArgumentException(
+                    "Erro ao inserir dado no database.",
+                    exception
+                );
             }
+        }
+
+        public async Task<bool> DeleteRoomAsync(
+            int roomId,
+            CancellationToken cancellationToken
+        )
+        {
+            return await _roomRepository.DeleteRoomAsync(roomId, cancellationToken);
         }
     }
 }

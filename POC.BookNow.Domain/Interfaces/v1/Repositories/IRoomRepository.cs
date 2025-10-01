@@ -4,6 +4,7 @@ namespace POC.BookNow.Domain.Interfaces.v1.Repositories
 {
     public interface IRoomRepository
     {
-        public Task<Guid> InsertRoom(Room entityRoom, CancellationToken cancellationToken);
+        Task<int> InsertRoomAsync(Room entityRoom, CancellationToken cancellationToken);
+        Task<bool> DeleteRoomAsync(int roomId, CancellationToken cancellationToken);
     }
 }

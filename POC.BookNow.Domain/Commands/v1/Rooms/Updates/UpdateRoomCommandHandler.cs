@@ -2,11 +2,11 @@
 
 namespace POC.BookNow.Domain.Commands.v1.Rooms.Updates
 {
-    public class UpdateRoomCommandHandler : IRequestHandler<UpdateRoomCommand, Guid>
+    public class UpdateRoomCommandHandler : IRequestHandler<UpdateRoomCommand, int>
     {
-        public Task<Guid> Handle(UpdateRoomCommand command, CancellationToken cancellationToken)
+        public Task<int> Handle(UpdateRoomCommand command, CancellationToken cancellationToken)
         {
-            return Task.FromResult(Guid.NewGuid());
+            return Task.FromResult(command.Id);
         }
     }
 }

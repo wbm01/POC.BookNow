@@ -5,9 +5,12 @@ namespace POC.BookNow.Infrastructure.Repositories.v1
 {
     public class RoomRepository : IRoomRepository
     {
-        public List<Room> Rooms { get; set; } = new List<Room>();
+        public List<Room> Rooms { get; set; } = [];
 
-        public Task<Guid> InsertRoom(Room entityRoom, CancellationToken cancellationToken)
+        public async Task<int> InsertRoomAsync(
+            Room entityRoom, 
+            CancellationToken cancellationToken
+        )
         {
             try
             {
@@ -15,17 +18,34 @@ namespace POC.BookNow.Infrastructure.Repositories.v1
                 {
                     if (room.Name == entityRoom.Name)
                     {
-                        throw new Exception();
+                        throw new ArgumentException($"Name já cadastrado no database.");
                     }
                 }
 
                 Rooms.Add(entityRoom);
 
-                return Task.FromResult(Guid.NewGuid());
+                return await Task.FromResult(entityRoom.Id);
             }
-            catch(Exception ex)
+            catch
             {
-                throw new Exception("Erro ao inserir sala: " + entityRoom.Name);
+                throw;
+            }
+        }
+
+        public async Task<bool> DeleteRoomAsync(
+            int roomId,
+            CancellationToken cancellationToken
+        )
+        {
+            try
+            {
+                Rooms.RemoveAll(room => room.Id == roomId);
+
+                return await Task.FromResult(true);
+            }
+            catch
+            {
+                throw;
             }
         }
     }

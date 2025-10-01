@@ -2,9 +2,14 @@
 
 namespace POC.BookNow.Domain.Commands.v1.Rooms.Updates
 {
-    public class UpdateRoomCommand : IRequest<Guid>
+    public class UpdateRoomCommand : IRequest<int>
     {
-        public UpdateRoomCommand(int id, string name, int capacity, List<string> resources)
+        public UpdateRoomCommand(
+            int id, 
+            string name, 
+            int capacity, 
+            List<string> resources
+        )
         {
             Id = id;
             Name = name;

@@ -18,21 +18,30 @@ namespace POC.BookNow.Controllers.v1
         }
 
         [HttpPost(Name = "InsertRoom")]
-        public async Task<Guid> InsertRoomAsync([FromBody] CreateRoomCommand command)
+        public async Task<int> InsertRoomAsync(
+            [FromBody] CreateRoomCommand command,
+            CancellationToken cancellationToken
+        )
         {
             return await _mediator.Send(command);
         }
 
-        [HttpPut("{id:guid}", Name = "UpdateRoom")]
-        public async Task<Guid> UpdateRoomAsync([FromRoute]Guid id, [FromBody]UpdateRoomCommand command)
+        [HttpPut(Name = "UpdateRoom")]
+        public async Task<int> UpdateRoomAsync(
+            [FromBody]UpdateRoomCommand command,
+            CancellationToken cancellationToken
+        )
         {
             return await _mediator.Send(command);
         }
 
-        [HttpDelete("{id:guid}", Name = "DeleteRoom")]
-        public async Task<bool> DeleteRoomAsync([FromRoute]Guid id, [FromBody]DeleteRoomCommand command)
+        [HttpDelete("{id:int}", Name = "DeleteRoom")]
+        public async Task<bool> DeleteRoomAsync(
+            [FromRoute]int id,
+            CancellationToken cancellationToken
+        )
         {
-            return await _mediator.Send(command);
+            return await _mediator.Send(new DeleteRoomCommand(id));
         }
     }
 }
