@@ -14,3 +14,10 @@ jobs:
         run: |
           echo "Você criou a sua primeira pipeline!"
           echo "Parabéns!"
+  segundo-job:
+    name: "Instalação do Ambiente NodeJS"
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Verificação da versão do NodeJS atual"
+        run: node --version
+    
